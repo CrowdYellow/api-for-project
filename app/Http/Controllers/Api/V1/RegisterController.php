@@ -32,6 +32,8 @@ class RegisterController extends Controller
             'ip'       => $request->getClientIp(),
         ]);
 
+        $user->avatar = env('APP_URL').$user->avatar;
+
         //注册成功 返回用户与token信息
         $data = [
             'user' => $user,

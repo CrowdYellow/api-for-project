@@ -13,7 +13,7 @@ class CaptchasController extends Controller
 
         $captcha = $captchaBuilder->build();
 
-        \Cache::put($key, ['code' => $captcha->getPhrase()]);
+        \Cache::put($key, ['code' => $captcha->getPhrase()], 60);
 
         $data = [
             'captcha_key' => $key,

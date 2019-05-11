@@ -10,7 +10,7 @@ class Request extends FormRequest
     public function failedValidation(Validator $validator)
     {
         $data = [
-            'status_code' => config('code.validate_err'),
+            'status' => config('code.validate_err'),
             'message'     => '参数验证失败',
             'data'        => $validator->getMessageBag()->all(),
         ];
