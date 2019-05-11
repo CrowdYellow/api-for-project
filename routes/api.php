@@ -18,6 +18,10 @@ $api->version('v1', [
     $api->group(['middleware' => 'api.auth'], function($api) {
         // 当前登录用户信息
         $api->get('user', 'UsersController@me');
+        // 修改密码
+        $api->post('user/update/password', 'UsersController@updatePassword');
+        // 修改头像
+        $api->post('user/update/avatar', 'UsersController@updateAvatar');
     });
 });
 
