@@ -15,6 +15,6 @@ class Request extends FormRequest
             'data'        => $validator->getMessageBag()->all(),
         ];
 
-        exit(json($data));
+        exit(json_encode($data));
     }
 }
