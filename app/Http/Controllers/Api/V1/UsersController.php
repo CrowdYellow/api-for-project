@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Requests\Api\PasswordRequest;
+use App\Models\UserMemberLog;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,15 @@ class UsersController extends Controller
         $user->avatar = env('APP_URL').$user->avatar;
 
         return $this->data(config('code.success'), 'success', $user);
+    }
+
+    public function log()
+    {
+        $user = $this->user();
+
+        $logs = UserMemberLog::where('user_id', $user)->orderBy('created_at', 'desc')->get()->toArray();
+
+        return $this->data(config('code.success'), 'success', $logss);
     }
 
     /**
