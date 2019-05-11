@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 class Controller extends \App\Http\Controllers\Api\Controller
 {
-    public function data($code, string $msg, array $data = null)
+    public function data($code, string $msg,  $data = null)
     {
         $info = [
             'status'  => $code,
