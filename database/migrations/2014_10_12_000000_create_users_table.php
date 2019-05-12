@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->integer('pid')->default(0);
             $table->string('ip');
             $table->string('avatar');
+            $table->string('nickname')->comment('昵称');
             $table->rememberToken();
             $table->timestamps();
         });

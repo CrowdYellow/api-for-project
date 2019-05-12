@@ -9,7 +9,7 @@ class RegisterController extends Controller
 {
     public function registered(RegisterRequest $request)
     {
-        $captchaData = \Cache::get($request->captcha_key);
+        /*$captchaData = \Cache::get($request->captcha_key);
 
         if (!$captchaData) {
             return $this->data(config('code.validate_err'), '图片验证码已失效');
@@ -23,10 +23,11 @@ class RegisterController extends Controller
         }
 
         // 清除图片验证码缓存
-        \Cache::forget($request->captcha_key);
+        \Cache::forget($request->captcha_key);*/
 
         $user = User::create([
             'name'     => $request->name,
+            'nickname' => $request->name,
             'password' => bcrypt($request->password),
             'avatar'   => '/images/users/default.png',
             'ip'       => $request->getClientIp(),
