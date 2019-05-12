@@ -25,9 +25,9 @@ class UsersController extends Controller
     {
         $user = $this->user();
 
-        $logs = UserMemberLog::where('user_id', $user)->orderBy('created_at', 'desc')->get()->toArray();
+        $logs = UserMemberLog::where('user_id', $user->id)->orderBy('created_at', 'desc')->get()->toArray();
 
-        return $this->data(config('code.success'), 'success', $logss);
+        return $this->data(config('code.success'), 'success', $logs);
     }
 
     /**
