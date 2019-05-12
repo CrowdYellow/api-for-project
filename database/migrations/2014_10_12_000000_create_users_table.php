@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name')->unique();
             $table->string('password');
             $table->integer('pid')->default(0);
+            $table->integer('card_count')->default(0);
             $table->string('ip');
             $table->string('avatar');
             $table->string('nickname')->comment('昵称');

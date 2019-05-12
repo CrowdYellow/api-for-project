@@ -22,6 +22,8 @@ $api->version('v1', [
         $api->post('user/update/password', 'UsersController@updatePassword');
         // 修改头像
         $api->post('user/update/avatar', 'UsersController@updateAvatar');
+        // 修改昵称
+        $api->post('user/update/nickname', 'UsersController@updateNickname');
         // 获取登录日志
         $api->get('user/logs', 'UsersController@log');
     });

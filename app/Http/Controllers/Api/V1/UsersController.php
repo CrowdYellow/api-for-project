@@ -21,6 +21,10 @@ class UsersController extends Controller
         return $this->data(config('code.success'), 'success', $user);
     }
 
+    /**
+     * 获取登录日志
+     * @return mixed
+     */
     public function log()
     {
         $user = $this->user();
@@ -65,6 +69,24 @@ class UsersController extends Controller
         $user = $this->user();
 
         $user->avatar = '/images/users/'.$request->avatar;
+
+        $user->save();
+
+        $user->avatar = env('APP_URL').$user->avatar;
+
+        return $this->data(config('code.success'), '修改成功', $user);
+    }
+
+    /**
+     * 修改昵称
+     * @param Request $request
+     * @return mixed
+     */
+    public function updateNickname(Request $request)
+    {
+        $user = $this->user();
+
+        $user->nickname = $request->nickname;
 
         $user->save();
 

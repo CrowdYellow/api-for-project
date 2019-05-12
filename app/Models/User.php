@@ -17,7 +17,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'pid', 'password', 'ip', 'avatar', 'nickname'
+        'name', 'pid', 'password', 'ip', 'avatar', 'nickname', 'card_count'
     ];
 
     /**
@@ -32,6 +32,11 @@ class User extends Authenticatable implements JWTSubject
     public function userMemberLogs()
     {
         return $this->hasMany(UserMemberLog::class);
+    }
+
+    public function userCard()
+    {
+        return $this->hasMany(UserCard::class);
     }
 
 
