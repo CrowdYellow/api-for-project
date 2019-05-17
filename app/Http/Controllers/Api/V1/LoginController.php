@@ -10,24 +10,47 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    /**
+     * 用户登录
+     * @param LoginRequest $request
+     * @param CaptchasController $captcha
+     * @return mixed
+     */
     public function login(LoginRequest $request, CaptchasController $captcha)
     {
         if ($captcha->verifyCaptchas($request->captcha_key, $request->captcha_code)) {
             return $this->data(config('code.validate_err'), '验证码有误');
         }
 
-        $info = [
-            'name'     => $request->name,
-            'password' => $request->password,
-        ];
+        return $this->attemptLogin($request->name, $request->password, $request->getClientIp());
+    }
 
-        if (!$token = Auth::guard('api')->attempt($info)) {
+    /**
+     * 校验登陆
+     * @param $name
+     * @param $password
+     * @param $ip
+     * @return mixed
+     */
+    public function attemptLogin($name, $password, $ip)
+    {
+        if (!$token = Auth::guard('api')->attempt(['name' => $name, 'password' => $password])) {
             return $this->data(config('code.validate_err'), '用户名或密码错误');
         }
 
         // 登录日志
-        $this->rememberThis($request->name, $request->getClientIp());
+        $this->rememberThis($name, $ip);
 
+        return $this->token($token);
+    }
+
+    /**
+     * 返回token
+     * @param $token
+     * @return mixed
+     */
+    public function token($token)
+    {
         $data = [
             'token' => 'Bearer '.$token,
             'expires_in' => Auth::guard('api')->factory()->getTTL()

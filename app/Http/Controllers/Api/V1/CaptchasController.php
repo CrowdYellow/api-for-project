@@ -22,7 +22,7 @@ class CaptchasController extends Controller
 
         $data = [
             'captcha_key' => $key,
-            'captcha_image_content' => $captcha->inline()
+            'captcha_image' => $captcha->inline()
         ];
 
         return $this->data(config('code.success'), 'success', $data);
