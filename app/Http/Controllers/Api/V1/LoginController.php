@@ -18,6 +18,7 @@ class LoginController extends Controller
      */
     public function login(LoginRequest $request, CaptchasController $captcha)
     {
+        // 校验验证码
         if ($captcha->verifyCaptchas($request->captcha_key, $request->captcha_code)) {
             return $this->data(config('code.validate_err'), '验证码有误');
         }
@@ -34,6 +35,7 @@ class LoginController extends Controller
      */
     public function attemptLogin($name, $password, $ip)
     {
+        // 校验用户名和密码
         if (!$token = Auth::guard('api')->attempt(['name' => $name, 'password' => $password])) {
             return $this->data(config('code.validate_err'), '用户名或密码错误');
         }
