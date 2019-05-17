@@ -7,27 +7,40 @@ use App\Models\User;
 
 class RegisterController extends Controller
 {
+    /**
+     * 用户注册
+     * @param RegisterRequest $request
+     * @param CaptchasController $captcha
+     * @return mixed
+     */
     public function registered(RegisterRequest $request, CaptchasController $captcha)
     {
         if ($captcha->verifyCaptchas($request->captcha_key, $request->captcha_code)) {
             return $this->data(config('code.validate_err'), '验证码有误');
         }
 
-        $user = User::create([
-            'name'     => $request->name,
-            'nickname' => $request->name,
-            'password' => bcrypt($request->password),
-            'avatar'   => '/images/users/default.png',
-            'ip'       => $request->getClientIp(),
-        ]);
+        $request['ip'] = $request->getClientIp();
+
+        $user = $this->create($request);
 
         $user->avatar = env('APP_URL').$user->avatar;
 
-        //注册成功 返回用户与token信息
-        $data = [
-            'user' => $user,
-        ];
+        return $this->data(config('code.success'), '注册成功', $user);
+    }
 
-        return $this->data(config('code.success'), '注册成功', $data);
+    /**
+     * 创建用户
+     * @param $data
+     * @return mixed
+     */
+    public function create($data)
+    {
+        return User::create([
+            'name' => $data['name'],
+            'nickname' => $data['name'],
+            'password' => bcrypt($data['password']),
+            'avatar' => '/images/users/default.png',
+            'ip' => $data['ip'],
+        ]);
     }
 }
