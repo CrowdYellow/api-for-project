@@ -26,6 +26,8 @@ $api->version('v1', [
         $api->post('user/update/nickname', 'UsersController@updateNickname');
         // 获取登录日志
         $api->get('user/logs', 'UsersController@log');
+        // 绑定银行卡
+        $api->post('user/bind/card', 'UsersController@bindCard');
     });
 });
 

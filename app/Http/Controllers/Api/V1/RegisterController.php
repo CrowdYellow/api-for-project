@@ -7,23 +7,11 @@ use App\Models\User;
 
 class RegisterController extends Controller
 {
-    public function registered(RegisterRequest $request)
+    public function registered(RegisterRequest $request, CaptchasController $captcha)
     {
-        /*$captchaData = \Cache::get($request->captcha_key);
-
-        if (!$captchaData) {
-            return $this->data(config('code.validate_err'), '图片验证码已失效');
+        if ($captcha->verifyCaptchas($request->captcha_key, $request->captcha_code)) {
+            return $this->data(config('code.validate_err'), '验证码有误');
         }
-
-        if (!hash_equals($captchaData['code'], $request->captcha_code)) {
-            // 验证错误就清除缓存
-            \Cache::forget($request->captcha_key);
-
-            return $this->data(config('code.validate_err'), '验证码错误');
-        }
-
-        // 清除图片验证码缓存
-        \Cache::forget($request->captcha_key);*/
 
         $user = User::create([
             'name'     => $request->name,
@@ -40,6 +28,6 @@ class RegisterController extends Controller
             'user' => $user,
         ];
 
-        return $this->data(config('code.success'), 'success', $data);
+        return $this->data(config('code.success'), '注册成功', $data);
     }
 }
